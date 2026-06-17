@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import ReactApexChart from "react-apexcharts";
 import axios from "axios";
 import GeneralContext from "./GeneralContext";
+import BACKEND_URL from "../config";
 import "./BuyActionWindow.css";
 
 const PERIODS = [
@@ -22,7 +23,7 @@ const AnalyticsWindow = ({ uid }) => {
     setLoading(true);
     setError("");
     axios
-      .get(`http://localhost:3002/historical?symbol=${encodeURIComponent(uid)}&period=${period}`)
+      .get(`${BACKEND_URL}/historical?symbol=${encodeURIComponent(uid)}&period=${period}`)
       .then((res) => {
         if (res.data.error) {
           setError(res.data.error);

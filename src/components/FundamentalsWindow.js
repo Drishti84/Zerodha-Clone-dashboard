@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import GeneralContext from "./GeneralContext";
+import BACKEND_URL from "../config";
 
 const FundamentalsWindow = ({ uid }) => {
   const { closeFundamentalsWindow } = useContext(GeneralContext);
@@ -12,7 +13,7 @@ const FundamentalsWindow = ({ uid }) => {
     setLoading(true);
     setError("");
     axios
-      .get(`http://localhost:3002/fundamentals?symbol=${encodeURIComponent(uid)}`)
+      .get(`${BACKEND_URL}/fundamentals?symbol=${encodeURIComponent(uid)}`)
       .then((res) => {
         if (res.data.error) {
           setError(res.data.error);

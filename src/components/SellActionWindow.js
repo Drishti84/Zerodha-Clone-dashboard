@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 import GeneralContext from "./GeneralContext";
+import BACKEND_URL from "../config";
 
 import "./BuyActionWindow.css";
 
@@ -17,7 +18,7 @@ const SellActionWindow = ({ uid, currentPrice }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/allHoldings", { withCredentials: true })
+      .get("${BACKEND_URL}/allHoldings", { withCredentials: true })
       .then((res) => {
         const holding = res.data.find(
           (h) => h.name === uid || h.stock === uid
@@ -40,7 +41,7 @@ const SellActionWindow = ({ uid, currentPrice }) => {
 
   const handleSellClick = () => {
     axios.post(
-      "http://localhost:3002/newOrder",
+      "${BACKEND_URL}/newOrder",
       {
         name: uid,
         qty: sellQty,

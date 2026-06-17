@@ -3,6 +3,7 @@ import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 
 import GeneralContext from "./GeneralContext";
+import BACKEND_URL from "../config";
 
 import { Tooltip, Grow } from "@mui/material";
 
@@ -27,7 +28,7 @@ const WatchList = () => {
 
     const fetchQuotes = () => {
       axios
-        .get(`http://localhost:3002/quotes?symbols=${encodeURIComponent(symbols)}`)
+        .get(`${BACKEND_URL}/quotes?symbols=${encodeURIComponent(symbols)}`)
         .then((res) => {
           const quotesByName = {};
           res.data.forEach((quote) => {

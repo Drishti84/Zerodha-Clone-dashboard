@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import BACKEND_URL from "../config";
 
 const Positions = () => {
   const [positions, setPositions] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/allOrders", { withCredentials: true })
+      .get("${BACKEND_URL}/allOrders", { withCredentials: true })
       .then((res) => {
         const today = new Date().toDateString();
 

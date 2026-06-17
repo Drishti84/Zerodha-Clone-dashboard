@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import axios from "axios";
+import BACKEND_URL from "../config";
 
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
@@ -10,7 +11,7 @@ const Menu = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/me", { withCredentials: true })
+      .get(`${BACKEND_URL}/me`, { withCredentials: true })
       .then((res) => {
         setUsername(res.data.username);
       })
@@ -34,7 +35,7 @@ const Menu = () => {
 
   return (
     <div className="menu-container" style={{ flexBasis: "100%", width: "100%" }}>
-      <a href="http://localhost:3000" title="Back to Zerodha home">
+      <a href={process.env.NODE_ENV === "production" ? "https://zerodha-clone-frontend-vk1h.onrender.com" : "http://localhost:3000"} title="Back to Zerodha home">
         <img src="logo.png" style={{ width: "50px" }} />
       </a>
       <div className="menus" style={{ flex: 1, justifyContent: "space-between" }}>

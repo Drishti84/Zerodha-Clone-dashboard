@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import BACKEND_URL from "../config";
 
 const fmt = (n) => n >= 1000 ? (n / 1000).toFixed(2) + "k" : n.toFixed(2);
 
@@ -13,7 +14,7 @@ const Summary = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/me", { withCredentials: true })
+      .get("${BACKEND_URL}/me", { withCredentials: true })
       .then((res) => {
         if (res.data && res.data.username) {
           setUsername(res.data.username);
@@ -24,7 +25,7 @@ const Summary = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/allHoldings", { withCredentials: true })
+      .get("${BACKEND_URL}/allHoldings", { withCredentials: true })
       .then((res) => {
         const holdings = res.data || [];
         const investment = holdings.reduce((sum, h) => sum + h.avg * h.qty, 0);
