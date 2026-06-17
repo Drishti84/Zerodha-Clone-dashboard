@@ -669,7 +669,7 @@ hr {
 
 .list {
   list-style-type: none;
-  padding-bottom: 12%;
+  padding-bottom: 0;
 }
 
 .list li {

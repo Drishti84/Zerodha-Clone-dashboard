@@ -1,80 +1,83 @@
-import React from "react";
-import {useState, useEffect} from "react"
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+
 const Orders = () => {
   const [allOrders, setAllOrders] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3002/allOrders").then((res) => {
-      // console.log(res.data);
-      setAllOrders(res.data);
-    });
+    axios
+      .get("http://localhost:3002/allOrders", { withCredentials: true })
+      .then((res) => setAllOrders(res.data));
   }, []);
 
   if (allOrders.length === 0) {
-    return <p>No orders available.</p>
-   }else{
     return (
-      <>
-      <h3 className="title">orders ({allOrders.length})</h3>
-  
-     
-        <div className="order-table">
-          <table>
-            <tr>
-              <th>Instrument</th>
-              <th>Qty.</th>
-              <th>Avg. cost</th>
-              <th>LTP</th>
-              <th>Cur. val</th>
-              <th>P&L</th>
-              <th>Net chg.</th>
-              <th>Day chg.</th>
-            </tr>
-  
-            {allOrders.map((stock, index) => {
-              const curValue = stock.price * stock.qty;
-              const isProfit = curValue - stock.avg * stock.qty >= 0.0;
-              const profClass = isProfit ? "profit" : "loss";
-              const dayClass = stock.isLoss ? "loss" : "profit";
-  
-              return (
-                <tr key={index}>
-                      <td>{stock.name}</td>
-                      <td>{stock.qty}</td>
-                      <td>{stock.avg ? stock.avg.toFixed(2) : "N/A"}</td>
-                      <td>{stock.price ? stock.price.toFixed(2) : "N/A"}</td>
-                      <td>{curValue ? curValue.toFixed(2) : "N/A"}</td>
-                      <td className={profClass}>
-                        {(curValue - stock.avg * stock.qty).toFixed(2)}
-                      </td>
-                      <td className={profClass}>{stock.net || 0}</td>
-                      <td className={dayClass}>{stock.day || 0}</td>
-                    </tr>
-              );
-            })}
-          </table>
+      <div className="orders">
+        <div className="no-orders">
+          <p>You haven't placed any orders yet.</p>
         </div>
-  
-    
-        </>
+      </div>
     );
-  };
-   }
+  }
 
-
-  
+  return (
+    <>
+      <h3 className="title">Orders ({allOrders.length})</h3>
+      <div className="order-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Date & Time</th>
+              <th>Instrument</th>
+              <th>Type</th>
+              <th>Qty.</th>
+              <th>Price (₹)</th>
+              <th>Value (₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allOrders
+              .slice()
+              .reverse()
+              .map((order, index) => {
+                const value = (order.qty * order.price).toFixed(2);
+                const isBuy = order.mode === "BUY";
+                return (
+                  <tr key={index}>
+                    <td style={{ fontSize: "0.8rem", color: "#666" }}>
+                      {order.createdAt
+                        ? new Date(order.createdAt).toLocaleString("en-IN", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })
+                        : "—"}
+                    </td>
+                    <td>{order.name}</td>
+                    <td>
+                      <span
+                        style={{
+                          color: isBuy ? "#26a69a" : "#ef5350",
+                          fontWeight: 600,
+                          fontSize: "0.82rem",
+                        }}
+                      >
+                        {order.mode}
+                      </span>
+                    </td>
+                    <td>{order.qty}</td>
+                    <td>{order.price ? Number(order.price).toFixed(2) : "—"}</td>
+                    <td>{value}</td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+};
 
 export default Orders;
-
-
- /* // <div className="orders">
-    //   <div className="no-orders">
-    //     <p>You haven't placed any orders today</p>
-
-    //     <Link to={"/"} className="btn">
-    //       Get started
-    //     </Link>
-    //   </div>
-    // </div> */

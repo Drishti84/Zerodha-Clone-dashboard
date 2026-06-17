@@ -1,10 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3002/me", { withCredentials: true })
+      .then((res) => {
+        setUsername(res.data.username);
+      })
+      .catch(() => {
+        setUsername("");
+      });
+  }, []);
+
+  const initials = username ? username.slice(0, 2).toUpperCase() : "ZU";
 
   const handleMenuClick = (index) => {
     setSelectedMenu(index);
@@ -18,9 +33,11 @@ const Menu = () => {
   const activeMenuClass = "menu selected";
 
   return (
-    <div className="menu-container">
-      <img src="logo.png" style={{ width: "50px" }} />
-      <div className="menus">
+    <div className="menu-container" style={{ flexBasis: "100%", width: "100%" }}>
+      <a href="http://localhost:3000" title="Back to Zerodha home">
+        <img src="logo.png" style={{ width: "50px" }} />
+      </a>
+      <div className="menus" style={{ flex: 1, justifyContent: "space-between" }}>
         <ul>
           <li>
             <Link
@@ -91,8 +108,8 @@ const Menu = () => {
         </ul>
         <hr />
         <div className="profile" onClick={handleProfileClick}>
-          <div className="avatar">ZU</div>
-          <p className="username">USERID</p>
+          <div className="avatar">{initials}</div>
+          <p className="username">{username || "USERID"}</p>
         </div>
       </div>
     </div>
