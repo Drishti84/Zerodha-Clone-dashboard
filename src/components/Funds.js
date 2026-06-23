@@ -19,7 +19,7 @@ const Funds = () => {
 
   const fetchFunds = () => {
     axios
-      .get("${BACKEND_URL}/funds", { withCredentials: true })
+      .get(`${BACKEND_URL}/funds`, { withCredentials: true })
       .then((res) => {
         setBalance(res.data.balance);
         setTotalInvestment(res.data.totalInvestment);
@@ -37,7 +37,7 @@ const Funds = () => {
     const amount = Number(addAmount);
     if (!amount || amount <= 0) return showMsg("Enter a valid amount", "red");
     axios
-      .post("${BACKEND_URL}/addFunds", { amount }, { withCredentials: true })
+      .post(`${BACKEND_URL}/addFunds`, { amount }, { withCredentials: true })
       .then(() => {
         fetchFunds();
         setAddAmount("");
@@ -51,7 +51,7 @@ const Funds = () => {
     if (!amount || amount <= 0) return showMsg("Enter a valid amount", "red");
     if (amount > balance) return showMsg("Insufficient balance", "red");
     axios
-      .post("${BACKEND_URL}/withdrawFunds", { amount }, { withCredentials: true })
+      .post(`${BACKEND_URL}/withdrawFunds`, { amount }, { withCredentials: true })
       .then(() => {
         fetchFunds();
         setWithdrawAmount("");

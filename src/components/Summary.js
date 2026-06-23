@@ -14,7 +14,7 @@ const Summary = () => {
 
   useEffect(() => {
     axios
-      .get("${BACKEND_URL}/me", { withCredentials: true })
+      .get(`${BACKEND_URL}/me`, { withCredentials: true })
       .then((res) => {
         if (res.data && res.data.username) {
           setUsername(res.data.username);
@@ -25,7 +25,7 @@ const Summary = () => {
 
   useEffect(() => {
     axios
-      .get("${BACKEND_URL}/allHoldings", { withCredentials: true })
+      .get(`${BACKEND_URL}/allHoldings`, { withCredentials: true })
       .then((res) => {
         const holdings = res.data || [];
         const investment = holdings.reduce((sum, h) => sum + h.avg * h.qty, 0);
