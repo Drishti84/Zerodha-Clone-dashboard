@@ -1,0 +1,8 @@
+{
+  "short_name": "Zerodha",
+  "name": "Zerodha Dashboard",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#387ed1",
+  "background_color": "#ffffff"
+}
