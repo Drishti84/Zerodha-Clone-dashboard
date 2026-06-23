@@ -2,7 +2,17 @@ import React, { useState, useEffect } from "react";
 import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 import { useNavigate } from "react-router-dom";
 
-const TOUR_KEY = "zerodha_tour_done";
+function getTourKey() {
+  try {
+    const token = sessionStorage.getItem("authToken");
+    if (token) {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      const uid = payload.id || payload.sub || "anon";
+      return `zerodha_tour_done_${uid}`;
+    }
+  } catch {}
+  return "zerodha_tour_done_anon";
+}
 
 const steps = [
   {
@@ -138,7 +148,7 @@ const Tour = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!localStorage.getItem(TOUR_KEY)) {
+    if (!localStorage.getItem(getTourKey())) {
       setTimeout(() => setRun(true), 1200);
     }
   }, []);
@@ -154,7 +164,7 @@ const Tour = () => {
     }
 
     if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
-      localStorage.setItem(TOUR_KEY, "true");
+      localStorage.setItem(getTourKey(), "true");
       navigate("/");
     }
   };
