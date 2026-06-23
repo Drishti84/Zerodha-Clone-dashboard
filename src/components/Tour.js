@@ -37,7 +37,7 @@ const steps = [
       "Type any stock symbol to filter the list instantly — try INFY, RELIANCE, or BAJFINANCE.",
   },
   {
-    target: ".list",
+    target: ".list li:first-child",
     title: "Hover to Trade",
     placement: "right",
     disableBeacon: true,
