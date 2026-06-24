@@ -70,41 +70,41 @@ const steps = [
     ),
   },
   {
-    target: ".content",
+    target: "body",
+    placement: "center",
     title: "Portfolio Summary",
-    placement: "left",
     disableBeacon: true,
     content:
       "Your Dashboard shows a complete portfolio overview — total invested, current market value, overall P&L, and number of holdings.",
   },
   {
-    target: ".content",
+    target: "body",
+    placement: "center",
     title: "Orders",
-    placement: "left",
     disableBeacon: true,
     content:
       "Orders shows every buy and sell transaction you've placed — stock name, quantity, price, and date.",
   },
   {
-    target: ".content",
+    target: "body",
+    placement: "center",
     title: "Holdings",
-    placement: "left",
     disableBeacon: true,
     content:
       "Holdings shows all your long-term stock positions with avg cost, current value, and individual P&L. A chart at the bottom visualises your portfolio split.",
   },
   {
-    target: ".content",
+    target: "body",
+    placement: "center",
     title: "Positions",
-    placement: "left",
     disableBeacon: true,
     content:
       "Positions tracks today's intraday trades, grouped by stock with net quantity and buy/sell breakdown.",
   },
   {
-    target: ".content",
+    target: "body",
+    placement: "center",
     title: "Funds",
-    placement: "left",
     disableBeacon: true,
     content:
       "Funds shows your available cash balance. Use Add Funds or Withdraw to manage your trading capital.",
@@ -185,7 +185,7 @@ const Tour = () => {
           zIndex: 10000,
           arrowColor: "#fff",
           backgroundColor: "#fff",
-          overlayColor: "rgba(0,0,0,0.45)",
+          overlayColor: "rgba(0,0,0,0.12)",
           textColor: "#333",
         },
         tooltip: {
@@ -220,6 +220,8 @@ const Tour = () => {
         },
         spotlight: {
           borderRadius: 6,
+          border: "2px solid #387ed1",
+          boxShadow: "0 0 0 4px rgba(56,126,209,0.15)",
         },
       }}
     />
